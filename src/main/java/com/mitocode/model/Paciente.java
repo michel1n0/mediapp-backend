@@ -1,20 +1,39 @@
 package com.mitocode.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 @Entity
+@Table(name = "paciente")
 public class Paciente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPaciente;
+
+    @Column(name = "nombres", nullable = false, length = 70)
+    @Size(min = 3, message = "Nombres debe tener minimo 3 caracteres")
     private String nombres;
+
+    @Column(name = "apellidos", nullable = false, length = 70)
+    @Size(min = 3, message = "Apellidos debe tener minimo 3 caracteres")
     private String apellidos;
+
+    @Column(name = "dni", nullable = false, length = 8)
+    @Size(min = 8, max = 8, message = "DNI debe tener 8 caracteres")
+    private String dni;
+
+    @Column(name = "direccion", nullable = false, length = 70)
+    @Size(min = 3, max = 150, message = "Direccion debe tener minimo 3 caracteres")
     private String direccion;
+
+    @Column(name = "telefono", nullable = false, length = 9)
+    @Size(min = 9, max = 9, message = "Telefono debe tener 9 caracteres")
     private String telefono;
+
+    @Column(name = "email", nullable = false, length = 55)
+    @Email
     private String email;
 
     public Integer getIdPaciente() {
@@ -63,5 +82,13 @@ public class Paciente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 }

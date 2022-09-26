@@ -5,11 +5,6 @@ import com.mitocode.model.Paciente;
 import java.util.List;
 import java.util.Optional;
 
-public interface IPacienteService {
+public interface IPacienteService extends ICRUD<Paciente> {
 
-    void registrar(Paciente pac);
-    void modificar(Paciente pac);
-    List<Paciente> listar();
-    Optional<Paciente> leerPorId(Integer id);
-    void eliminar(Integer id);
 }
