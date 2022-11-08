@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -29,6 +30,9 @@ public class Consulta {
 
     @JsonSerialize(using = ToStringSerializer.class)
     private LocalDateTime fecha;
+
+    @OneToMany(mappedBy = "consulta", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<DetalleConsulta> detalleConsulta;
 
     public Integer getIdConsulta() {
         return idConsulta;
@@ -68,5 +72,13 @@ public class Consulta {
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+
+    public List<DetalleConsulta> getDetalleConsulta() {
+        return detalleConsulta;
+    }
+
+    public void setDetalleConsulta(List<DetalleConsulta> detalleConsulta) {
+        this.detalleConsulta = detalleConsulta;
     }
 }
