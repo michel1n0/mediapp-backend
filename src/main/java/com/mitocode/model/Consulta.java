@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -80,5 +81,18 @@ public class Consulta {
 
     public void setDetalleConsulta(List<DetalleConsulta> detalleConsulta) {
         this.detalleConsulta = detalleConsulta;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Consulta consulta = (Consulta) o;
+        return idConsulta.equals(consulta.idConsulta);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idConsulta);
     }
 }

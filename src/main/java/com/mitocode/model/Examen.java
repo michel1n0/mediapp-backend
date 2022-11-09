@@ -48,4 +48,16 @@ public class Examen {
         this.descripcion = descripcion;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Examen examen = (Examen) o;
+        return idExamen.equals(examen.idExamen);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idExamen);
+    }
 }
