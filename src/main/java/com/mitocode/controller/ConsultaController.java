@@ -1,5 +1,6 @@
 package com.mitocode.controller;
 
+import com.mitocode.dto.ConsultaListaExamenDTO;
 import com.mitocode.exception.ModelNotFoundException;
 import com.mitocode.model.Consulta;
 import com.mitocode.service.IConsultaService;
@@ -40,8 +41,8 @@ public class ConsultaController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> registrar(@Valid @RequestBody Consulta obj){
-        Consulta resp = service.registrar(obj);
+    public ResponseEntity<Object> registrar(@Valid @RequestBody ConsultaListaExamenDTO obj){
+        Consulta resp = service.registrarTransaccional(obj);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(resp.getIdConsulta()).toUri();
         return ResponseEntity.created(location).build();
     }
