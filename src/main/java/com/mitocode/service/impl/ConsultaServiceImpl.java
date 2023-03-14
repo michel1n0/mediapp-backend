@@ -7,9 +7,9 @@ import com.mitocode.repo.IConsultaRepo;
 import com.mitocode.service.IConsultaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.JoinColumn;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,13 +22,22 @@ public class ConsultaServiceImpl implements IConsultaService {
     @Autowired
     private IConsultaExamenRepo ceRepo;
 
+    @Transactional
+    @Override
+    public Consulta registrarTransaccional(ConsultaListaExamenDTO consultaDTO) {
+        consultaDTO.getConsulta().getDetalleConsulta().forEach( det -> det.setConsulta(consultaDTO.getConsulta()));
+        repo.save(consultaDTO.getConsulta());
+
+        consultaDTO.getListExamen().forEach(ex -> ceRepo.registrar(consultaDTO.getConsulta().getIdConsulta(), ex.getIdExamen()));
+        return consultaDTO.getConsulta();
+    }
+
     @Override
     public Consulta registrar(Consulta obj) {
         obj.getDetalleConsulta().forEach(det -> {
             det.setConsulta(obj);
         });
         return repo.save(obj);
-
     }
 
     @Override
@@ -51,13 +60,4 @@ public class ConsultaServiceImpl implements IConsultaService {
         repo.deleteById(id);
     }
 
-    @Transactional
-    @Override
-    public Consulta registrarTransaccional(ConsultaListaExamenDTO consultaDTO) {
-        consultaDTO.getConsulta().getDetalleConsulta().forEach(det -> det.setConsulta(consultaDTO.getConsulta()));
-        repo.save(consultaDTO.getConsulta());
-
-        consultaDTO.getListExamen().forEach(ex -> ceRepo.registrar(consultaDTO.getConsulta().getIdConsulta(), ex.getIdExamen()));
-        return consultaDTO.getConsulta();
-    }
 }

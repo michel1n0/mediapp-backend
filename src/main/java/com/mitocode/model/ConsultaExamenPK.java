@@ -22,7 +22,7 @@ public class ConsultaExamenPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ConsultaExamenPK that = (ConsultaExamenPK) o;
-        return examen.equals(that.examen) && consulta.equals(that.consulta);
+        return Objects.equals(examen, that.examen) && Objects.equals(consulta, that.consulta);
     }
 
     @Override
